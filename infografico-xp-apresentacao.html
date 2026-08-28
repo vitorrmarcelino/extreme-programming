@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extreme Programming — infográfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink0:#151A24; --ink1:#1C2331; --ink2:#232C3D; --ink3:#2A3547;
+  --line:#334158; --fg:#DCE3ED; --dim:#8695AB; --faint:#5F6E85;
+  --red:#FF6B6B; --green:#52D98A; --amber:#F2B441; --cyan:#6BD5E1;
+  --violet:#B79CF0; --cream:#F6EFDE;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink0);color:var(--fg);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;
+  padding:26px 22px 46px;
+}
+code,.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+strong{font-weight:600;color:#fff}
+em{font-style:italic;color:var(--dim)}
+a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(107,213,225,.28);word-break:break-word}
+a:hover{border-bottom-color:var(--cyan)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:3px}
+
+/* ---------- janela ---------- */
+.app{
+  max-width:1260px;margin:0 auto;background:var(--ink1);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;
+  box-shadow:0 22px 60px rgba(0,0,0,.42);
+}
+.chrome{display:flex;align-items:center;gap:14px;padding:11px 16px;background:var(--ink2);border-bottom:1px solid var(--line)}
+.lights{display:flex;gap:7px;flex:0 0 auto}
+.lights i{width:11px;height:11px;border-radius:50%;display:block}
+.lights i:nth-child(1){background:#FF5F57}
+.lights i:nth-child(2){background:#FEBC2E}
+.lights i:nth-child(3){background:#28C840}
+.chrome .path{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chrome .path b{color:var(--fg);font-weight:500}
+.shell{display:grid;grid-template-columns:246px minmax(0,1fr)}
+
+/* ---------- explorer ---------- */
+.explorer{border-right:1px solid var(--line);padding:16px 0 26px;position:sticky;top:0;align-self:start;max-height:100vh;overflow-y:auto}
+.explorer h2{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);padding:0 18px 12px}
+.explorer a{display:flex;align-items:baseline;gap:9px;padding:7px 18px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--dim);border:0;border-left:2px solid transparent}
+.explorer a span{color:var(--faint);font-size:11px}
+.explorer a:hover{background:var(--ink2);color:#fff;border-left-color:var(--green)}
+.explorer a:hover span{color:var(--green)}
+
+/* ---------- seções ---------- */
+.editor{padding:0 0 10px;min-width:0}
+.sec{padding:46px 40px;border-bottom:1px solid var(--line);scroll-margin-top:12px}
+.sec-head{margin-bottom:28px}
+.filename{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint);letter-spacing:.04em;display:block;margin-bottom:12px}
+.filename b{color:var(--green);font-weight:500}
+h1{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(34px,6.4vw,68px);line-height:.98;letter-spacing:-.045em;color:#fff}
+h1 .g{color:var(--green)}
+h2{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:clamp(22px,3.2vw,32px);line-height:1.1;letter-spacing:-.03em;color:#fff}
+h3{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:17px;letter-spacing:-.02em;color:#fff}
+.lede{color:var(--dim);font-size:16.5px;max-width:68ch;margin-top:14px}
+.lede+.lede{margin-top:11px}
+.cmt{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint);letter-spacing:.03em;margin:32px 0 14px}
+.cmt.g{color:var(--green)}
+.cmt.r{color:var(--red)}
+.cmt:first-child{margin-top:0}
+
+/* ---------- hero ---------- */
+.hero{padding:52px 40px 46px;border-bottom:1px solid var(--line)}
+.term{background:var(--ink0);border:1px solid var(--line);border-radius:8px;padding:18px 20px;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;margin-top:26px;max-width:76ch}
+.term .pr{color:var(--green)}
+.term .out{color:var(--dim);display:block;white-space:pre-wrap;margin-top:2px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;margin-top:26px}
+.meta div{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.meta dt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.meta dd{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;margin-top:5px;color:#fff}
+
+/* ---------- blocos ---------- */
+.card{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:20px 22px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.val{border-top:2px solid var(--line)}
+.val h3{font-size:15.5px;margin-bottom:6px}
+.val p{font-size:14.5px;color:var(--dim);line-height:1.55}
+.val.c1{border-top-color:var(--cyan)} .val.c2{border-top-color:var(--green)}
+.val.c3{border-top-color:var(--amber)} .val.c4{border-top-color:var(--red)}
+.val.c5{border-top-color:var(--violet)}
+.val .tag{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);display:block;margin-top:9px}
+.dl{list-style:none}
+.dl li{padding:10px 0;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--dim);line-height:1.55}
+.dl li:last-child{border-bottom:0}
+.dl b{font-family:'JetBrains Mono',monospace;font-weight:700;color:#fff;font-size:13.5px;display:block;margin-bottom:3px}
+
+/* ---------- 12 práticas ---------- */
+.prax{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:12px}
+.px{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:14px 16px 16px;position:relative;padding-left:44px}
+.px .no{position:absolute;left:15px;top:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--green);font-weight:700}
+.px .nm{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:700;color:#fff;line-height:1.35}
+.px .en{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--faint);display:block;margin-top:3px}
+.px .dep{font-size:13.5px;color:var(--dim);line-height:1.5;margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
+.px .dep b{color:var(--red);font-weight:500;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em}
+
+/* ---------- TDD ---------- */
+.tdd{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:12px}
+.tstep{background:var(--ink0);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tstep .hd{padding:11px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;background:var(--ink2);border-bottom:1px solid var(--line)}
+.tstep.r .hd{color:var(--red)} .tstep.g .hd{color:var(--green)} .tstep.a .hd{color:var(--amber)}
+.tstep .bd{padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.75}
+.tstep .l{display:block;color:var(--dim)}
+.tstep .l.r{color:var(--red)} .tstep .l.g{color:var(--green)}
+.tstep .l.a{color:var(--amber)} .tstep .l.d{color:var(--faint)}
+.tstep .ft{padding:12px 16px;border-top:1px solid var(--line);font-size:13.5px;color:var(--dim);line-height:1.5;background:var(--ink1)}
+
+/* ---------- git log ---------- */
+.log{position:relative;padding-left:26px}
+.log::before{content:'';position:absolute;left:5px;top:14px;bottom:14px;width:1px;background:var(--line)}
+.commit{position:relative;padding:9px 0 14px}
+.commit::before{content:'';position:absolute;left:-25px;top:16px;width:9px;height:9px;border-radius:50%;background:var(--green)}
+.commit .hd{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:5px}
+.commit .sha{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--amber)}
+.commit .msg{font-family:'JetBrains Mono',monospace;font-size:13.5px;color:#fff;font-weight:500}
+.commit .date{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);margin-left:auto}
+.commit p{font-size:14.5px;color:var(--dim);max-width:72ch;line-height:1.6}
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:14px}
+.person{background:var(--ink2);border:1px solid var(--line);border-left:2px solid var(--cyan);border-radius:8px;padding:18px 20px}
+.person .r{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint)}
+.person .n{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:17px;color:#fff;margin:6px 0 8px}
+.person p{font-size:14px;color:var(--dim);line-height:1.55}
+
+/* ---------- fases ---------- */
+.phases{display:grid;gap:10px}
+.ph{background:var(--ink2);border:1px solid var(--line);border-left:2px solid var(--green);border-radius:0 8px 8px 0;padding:18px 22px;display:grid;grid-template-columns:44px 1fr;gap:18px;align-items:start}
+.ph .n{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:24px;color:var(--ink3);line-height:1}
+.ph h3{font-size:18px;margin-bottom:6px}
+.ph h3 small{font-family:'JetBrains Mono',monospace;font-weight:400;font-size:11.5px;color:var(--faint);margin-left:10px}
+.ph p{color:var(--dim);font-size:15px;max-width:74ch}
+.ph .out{margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--faint)}
+.ph .out b{color:var(--cyan);font-weight:500}
+.flow{background:var(--ink0);border:1px solid var(--line);border-radius:8px;padding:24px 20px 16px}
+.flow svg{width:100%;height:auto;display:block}
+.flow figcaption{font-size:13px;color:var(--faint);margin-top:14px;line-height:1.55}
+.loop{background:var(--ink2);border:1px dashed var(--line);border-radius:8px;padding:20px 22px}
+.loop ul{list-style:none;display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-top:14px}
+.loop li{font-family:'JetBrains Mono',monospace;font-size:11.5px;background:var(--ink0);border:1px solid var(--line);border-radius:4px;padding:6px 10px}
+.loop li.ar{background:none;border:0;padding:0 1px;color:var(--green)}
+.loop li.bk{background:var(--green);color:#0F1720;border-color:var(--green);font-weight:700}
+
+/* ---------- artefatos ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:14px}
+.idx{
+  background:var(--cream);color:#2A2118;border-radius:6px;
+  padding:16px 16px 18px 36px;box-shadow:0 3px 0 rgba(0,0,0,.3);min-height:170px;
+  background-image:
+    linear-gradient(to right,transparent 24px,rgba(200,70,60,.45) 24px,rgba(200,70,60,.45) 25px,transparent 25px),
+    repeating-linear-gradient(to bottom,transparent 0 23px,rgba(40,70,120,.13) 23px 24px);
+  background-position:0 0,0 42px;
+}
+.idx .k{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#B03A2B}
+.idx h4{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14.5px;margin:5px 0 10px;line-height:1.25;color:#211A12}
+.idx p{font-size:13.5px;line-height:1.78;color:#4A3F32}
+.note{margin-top:18px;padding:14px 18px;background:var(--ink2);border-left:2px solid var(--amber);border-radius:0 6px 6px 0;font-size:14.5px;color:var(--dim)}
+
+/* ---------- papéis ---------- */
+.roles{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.role{display:grid;grid-template-columns:210px 1fr;gap:22px;padding:16px 20px;border-bottom:1px solid var(--line);align-items:start}
+.role:last-child{border-bottom:0}
+.role .nm{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;color:#fff}
+.role .en{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);margin-top:3px}
+.role p{font-size:15px;color:var(--dim);max-width:74ch}
+
+/* ---------- regras ---------- */
+.tree{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:12px}
+.dir{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:16px 18px 18px}
+.dir h4{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--cyan);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.dir h4 span{color:var(--faint);font-weight:400;font-size:11px;float:right}
+.dir ol{list-style:none;counter-reset:r}
+.dir li{counter-increment:r;font-size:13.5px;color:var(--dim);line-height:1.5;padding:6px 0 6px 20px;position:relative}
+.dir li::before{content:counter(r);position:absolute;left:0;top:6px;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--faint)}
+
+/* ---------- prós e contras ---------- */
+.pc{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pc>div{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:20px 22px}
+.pc .good{border-top:2px solid var(--green)}
+.pc .bad{border-top:2px solid var(--red)}
+.pc h3{font-size:15.5px;margin-bottom:12px}
+.pc .cmt{margin:0 0 10px}
+.pc ul{list-style:none}
+.pc li{font-size:14.5px;color:var(--dim);line-height:1.55;padding:9px 0 9px 22px;position:relative;border-bottom:1px solid var(--line)}
+.pc li:last-child{border-bottom:0}
+.pc .good li::before{content:'+';position:absolute;left:0;top:9px;color:var(--green);font-family:'JetBrains Mono',monospace}
+.pc .bad li::before{content:'−';position:absolute;left:0;top:9px;color:var(--red);font-family:'JetBrains Mono',monospace}
+
+/* ---------- tabela ---------- */
+.tbl{width:100%;border-collapse:collapse;font-size:14.5px}
+.tbl th,.tbl td{padding:12px 15px;border:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.5}
+.tbl thead th{font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff;background:var(--ink3)}
+.tbl thead th:first-child{background:var(--ink1)}
+.tbl tbody th{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:500;width:19%;background:var(--ink1)}
+.tbl tbody td{color:var(--dim);background:var(--ink2)}
+.tbl .xpc{border-left:2px solid var(--green)}
+
+/* ---------- glossário ---------- */
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(292px,1fr));gap:12px}
+.gterm{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+.gterm dt{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:#fff}
+.gterm dt em{font-family:'JetBrains Mono',monospace;font-style:normal;font-weight:400;font-size:10.5px;color:var(--faint);margin-left:8px}
+.gterm dd{font-size:14px;color:var(--dim);line-height:1.55;margin-top:5px}
+
+/* ---------- referências ---------- */
+.refs{background:var(--ink2);border:1px solid var(--line);border-radius:8px;padding:26px 28px;list-style:none}
+.refs li{font-size:15px;line-height:1.55;margin-bottom:16px;max-width:86ch;color:var(--dim)}
+.refs li:last-child{margin-bottom:0}
+.refs b{color:#fff;font-weight:600}
+.foot{margin-top:20px;font-size:13px;color:var(--faint);line-height:1.6;max-width:86ch}
+
+/* ---------- barra de status ---------- */
+.status{
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  padding:0 18px;height:36px;background:var(--green);color:#0F1720;
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;
+}
+.status .it{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.status .dot{width:8px;height:8px;border-radius:50%;background:#0F1720}
+.status .push{margin-left:auto}
+
+@media (max-width:900px){
+  body{padding:14px 12px 28px}
+  .shell{grid-template-columns:1fr}
+  .explorer{position:sticky;top:0;z-index:20;max-height:none;overflow-x:auto;overflow-y:hidden;border-right:0;border-bottom:1px solid var(--line);display:flex;padding:0;background:var(--ink1)}
+  .explorer h2{display:none}
+  .explorer a{border-left:0;border-bottom:2px solid transparent;white-space:nowrap;padding:12px 14px}
+  .sec,.hero{padding:32px 20px}
+  .grid2,.pc,.role{grid-template-columns:1fr}
+  .role{gap:6px}
+  .tbl{font-size:13px}
+  .tbl th,.tbl td{padding:9px 10px}
+  .tbl tbody th{width:auto}
+  .status{height:auto;padding:10px 14px;gap:12px}
+  .status .push{margin-left:0}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{
+  @page{size:A4;margin:12mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{padding:0}
+  .app{border:0;box-shadow:none;border-radius:0}
+  .explorer,.chrome{display:none}
+  .shell{grid-template-columns:1fr}
+  .sec,.hero{padding:22px 0}
+  .px,.idx,.ph,.person,.commit,.gterm,.dir,.tstep,.role,.refs li,.tbl tr{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="chrome">
+    <div class="lights"><i></i><i></i><i></i></div>
+    <div class="path">~/faculdade/eng-software/ <b>extreme-programming/</b></div>
+  </div>
+
+  <div class="shell">
+
+    <nav class="explorer" aria-label="Seções">
+      <h2>Explorador</h2>
+      <a href="#s0"><span>◆</span>00_leia-me.md</a>
+      <a href="#s1"><span>◆</span>01_foco.md</a>
+      <a href="#s2"><span>◆</span>02_origem.log</a>
+      <a href="#s3"><span>◆</span>03_ciclo-de-vida.md</a>
+      <a href="#s4"><span>◆</span>04_artefatos.md</a>
+      <a href="#s5"><span>◆</span>05_papeis.md</a>
+      <a href="#s6"><span>◆</span>06_regras.cfg</a>
+      <a href="#s7"><span>◆</span>07_critica.md</a>
+      <a href="#s8"><span>◆</span>08_xp-vs-scrum.md</a>
+      <a href="#s9"><span>◆</span>09_glossario.md</a>
+      <a href="#s10"><span>◆</span>10_referencias.md</a>
+    </nav>
+
+    <main class="editor">
+
+      <!-- 00 -->
+      <section class="hero" id="s0">
+        <h1>Extreme<br>Programm<span class="g">ing</span></h1>
+        <div class="term">
+          <span class="pr">$</span> <span class="mono">xp --explain</span>
+          <span class="out">Disciplina de desenvolvimento de software que leva boas práticas de
+engenharia ao extremo: se revisar código é bom, revise o tempo todo
+— programação em par. Se testar é bom, teste antes de escrever o
+código. Se integrar é bom, integre várias vezes ao dia.</span>
+        </div>
+        <dl class="meta">
+          <div><dt>Criador</dt><dd>Kent Beck</dd></div>
+          <div><dt>Primeiro projeto</dt><dd>06/03/1996</dd></div>
+          <div><dt>Onde nasceu</dt><dd>Chrysler C3</dd></div>
+          <div><dt>Iteração</dt><dd>1 a 3 semanas</dd></div>
+          <div><dt>Time</dt><dd>2 a 10 pessoas</dd></div>
+        </dl>
+      </section>
+
+      <!-- 01 -->
+      <section class="sec" id="s1">
+        <div class="sec-head">
+          <span class="filename">01_foco.md</span>
+          <h2>Qualidade técnica e resposta rápida à mudança</h2>
+          <p class="lede">XP parte de uma premissa incômoda: os requisitos <strong>vão</strong> mudar, e tentar congelá-los no início é caro. Em vez de resistir, a metodologia reduz o custo da mudança com ciclos curtíssimos, feedback constante e um código sempre limpo o bastante para ser alterado sem medo.</p>
+          <p class="lede">O eixo é a satisfação do cliente: entregar o que ele precisa, quando precisa, em vez de tudo o que ele poderia querer numa data distante. Isso se apoia em valores de comportamento, não em documentação — e exige <strong>muita disciplina</strong>. É indicada especialmente para times pequenos e médios diante de requisitos voláteis.</p>
+        </div>
+
+        <p class="cmt">// os cinco valores</p>
+        <div class="grid3">
+          <div class="card val c1"><h3>Comunicação</h3><p>Conversa direta entre cliente, programadores e gestão substitui a documentação formal como forma de espalhar conhecimento.</p></div>
+          <div class="card val c2"><h3>Simplicidade</h3><p>Fazer a coisa mais simples que possa funcionar. Projetar para hoje, não para um futuro incerto.</p></div>
+          <div class="card val c3"><h3>Feedback</h3><p>Do sistema pelos testes, do cliente pelas entregas, do time pelas estimativas. Rápido e frequente.</p></div>
+          <div class="card val c4"><h3>Coragem</h3><p>Para refatorar código que funciona, jogar fora o que não serve e dizer "não" quando for verdade.</p></div>
+          <div class="card val c5"><h3>Respeito</h3><p>Ninguém quebra a build nem atrasa o colega. Todos contribuem e são valorizados.<span class="tag">acrescentado na 2ª ed., 2004</span></p></div>
+        </div>
+
+        <p class="cmt">// as quatro atividades básicas e os princípios</p>
+        <div class="grid2">
+          <div class="card">
+            <ul class="dl">
+              <li><b>codificar()</b>O único produto indispensável. Código também comunica: quando explicar é difícil, escreve-se o código para mostrar a ideia.</li>
+              <li><b>testar()</b>Se um pouco de teste elimina alguns defeitos, muito teste elimina muitos. Não é fase, é atividade permanente.</li>
+              <li><b>ouvir()</b>Programadores precisam entender o negócio o bastante para devolver feedback técnico sobre o que é viável.</li>
+              <li><b>projetar()</b>Sem projeto o sistema vira um emaranhado de dependências. Com projeto simples e contínuo, mudar uma parte não quebra as outras.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <ul class="dl">
+              <li><b>feedback rápido</b>Quanto menor o intervalo entre a ação e o retorno, mais rápido o time aprende e corrige.</li>
+              <li><b>assumir simplicidade</b>Tratar todo problema como se a solução fosse simples. Recusar o "codificar para reúso futuro".</li>
+              <li><b>mudança incremental</b>Muitas mudanças pequenas funcionam melhor do que uma grande de uma vez.</li>
+              <li><b>abraçar a mudança</b>Requisito que virou do avesso não é problema: é informação para a próxima iteração.</li>
+              <li><b>trabalho de qualidade</b>Ninguém gosta de fazer trabalho ruim. Qualidade não é a variável que se negocia.</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="cmt">// as 12 práticas — e o que cada uma sustenta</p>
+        <div class="prax">
+          <div class="px"><span class="no">01</span><span class="nm">Cliente sempre disponível</span><span class="en">on-site customer</span><p class="dep"><b>sem ela</b> o jogo do planejamento fica sem quem priorize e as dúvidas viram suposição.</p></div>
+          <div class="px"><span class="no">02</span><span class="nm">Jogo do planejamento</span><span class="en">planning game</span><p class="dep"><b>sem ele</b> cliente e time voltam a negociar prazo em vez de escopo.</p></div>
+          <div class="px"><span class="no">03</span><span class="nm">Pequenas versões</span><span class="en">small releases</span><p class="dep"><b>sem elas</b> o feedback do cliente chega tarde demais para ser barato.</p></div>
+          <div class="px"><span class="no">04</span><span class="nm">Metáfora do sistema</span><span class="en">system metaphor</span><p class="dep"><b>sem ela</b> cada dupla nomeia as coisas de um jeito e a propriedade coletiva confunde.</p></div>
+          <div class="px"><span class="no">05</span><span class="nm">Projeto simples</span><span class="en">simple design</span><p class="dep"><b>sem ele</b> a refatoração passa a custar caro demais para ser contínua.</p></div>
+          <div class="px"><span class="no">06</span><span class="nm">Testes primeiro</span><span class="en">test driven development</span><p class="dep"><b>sem eles</b> refatorar e ter propriedade coletiva do código vira aposta.</p></div>
+          <div class="px"><span class="no">07</span><span class="nm">Refatoração contínua</span><span class="en">refactoring</span><p class="dep"><b>sem ela</b> o projeto simples de hoje é a bagunça da próxima iteração.</p></div>
+          <div class="px"><span class="no">08</span><span class="nm">Programação em par</span><span class="en">pair programming</span><p class="dep"><b>sem ela</b> o conhecimento deixa de circular e a revisão de código vira etapa separada.</p></div>
+          <div class="px"><span class="no">09</span><span class="nm">Propriedade coletiva</span><span class="en">collective ownership</span><p class="dep"><b>sem ela</b> cada mudança espera a autorização de um dono.</p></div>
+          <div class="px"><span class="no">10</span><span class="nm">Integração contínua</span><span class="en">continuous integration</span><p class="dep"><b>sem ela</b> os conflitos se acumulam para o pior momento possível.</p></div>
+          <div class="px"><span class="no">11</span><span class="nm">Ritmo sustentável</span><span class="en">40-hour week</span><p class="dep"><b>sem ele</b> o cansaço derruba a qualidade que as outras práticas protegem.</p></div>
+          <div class="px"><span class="no">12</span><span class="nm">Padrão de codificação</span><span class="en">coding standard</span><p class="dep"><b>sem ele</b> propriedade coletiva e rodízio de duplas param de funcionar.</p></div>
+        </div>
+        <p class="note">As práticas são <strong>interdependentes</strong>: cada uma cobre o ponto fraco das outras. É por isso que Stephens e Rosenberg argumentam que adotar só uma parte delas tende a derrubar o processo inteiro.</p>
+
+        <p class="cmt g">// vermelho, verde, refatorar — o ciclo do TDD</p>
+        <div class="tdd">
+          <div class="tstep r">
+            <div class="hd">1 · vermelho</div>
+            <div class="bd">
+              <span class="l d">// história: calcular salário líquido</span>
+              <span class="l">$ sunit run SalarioTest</span>
+              <span class="l r">FAIL testDescontaINSS</span>
+              <span class="l r">1 teste, 1 falha</span>
+            </div>
+            <p class="ft">Escreve-se o teste antes do código. Ele falha porque a funcionalidade ainda não existe — e o teste vira a definição de "pronto".</p>
+          </div>
+          <div class="tstep g">
+            <div class="hd">2 · verde</div>
+            <div class="bd">
+              <span class="l">$ sunit run SalarioTest</span>
+              <span class="l g">PASS testDescontaINSS</span>
+              <span class="l g">1 teste, 0 falhas</span>
+              <span class="l d">// código feio, mas passando</span>
+            </div>
+            <p class="ft">Escreve-se o código mais simples que faz o teste passar, e nada além disso. É o YAGNI na prática.</p>
+          </div>
+          <div class="tstep a">
+            <div class="hd">3 · refatorar</div>
+            <div class="bd">
+              <span class="l a">~ tabela do INSS extraída p/ classe</span>
+              <span class="l">$ sunit run SalarioTest</span>
+              <span class="l g">PASS testDescontaINSS</span>
+              <span class="l g">comportamento externo intacto</span>
+            </div>
+            <p class="ft">Com o teste verde, melhorar a estrutura interna é seguro: se algo quebrar, o teste avisa na hora.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 -->
+      <section class="sec" id="s2">
+        <div class="sec-head">
+          <span class="filename">02_origem.log</span>
+          <h2>Kent Beck, na folha de pagamento da Chrysler</h2>
+          <p class="lede">A Chrysler contratou Kent Beck, um nome forte em Smalltalk, para fazer ajuste de desempenho no sistema C3 (Chrysler Comprehensive Compensation System). Ao entrar no projeto ele viu problemas no <em>processo</em>, não só no código: propôs girar até 10 os botões das práticas que considerava essenciais e desligar o resto. Beck assumiu a liderança do C3 em março de 1996; o site oficial registra <strong>6 de março de 1996</strong> como início do primeiro projeto XP.</p>
+        </div>
+
+        <div class="people">
+          <div class="person"><span class="r">Criador</span><span class="n">Kent Beck</span><p>Formulou e nomeou a metodologia no C3, escreveu o livro fundador e depois consolidou o TDD como prática difundida.</p></div>
+          <div class="person"><span class="r">Influência decisiva</span><span class="n">Ward Cunningham</span><p>Colaborador frequente de Beck; muitas ideias vieram do trabalho conjunto dos dois. Seu WikiWikiWeb foi onde o XP se difundiu.</p></div>
+          <div class="person"><span class="r">Coach do primeiro time</span><span class="n">Ron Jeffries</span><p>Convidado por Beck para o C3, atuou como coach transformando as práticas em hábito na equipe.</p></div>
+          <div class="person"><span class="r">Documentação das regras</span><span class="n">Don Wells</span><p>Publicou em 1999 as 29 regras de XP no extremeprogramming.org, hoje a referência canônica online.</p></div>
+        </div>
+
+        <p class="cmt">// git log --oneline</p>
+        <div class="log">
+          <div class="commit">
+            <div class="hd"><span class="sha">a3f9c21</span><span class="msg">nasce o XP no projeto C3</span><span class="date">mar/1996</span></div>
+            <p>Beck assume a liderança do sistema de folha de pagamento da Chrysler, escrito em Smalltalk sobre GemStone, e começa a refinar o processo de desenvolvimento com o time.</p>
+          </div>
+          <div class="commit">
+            <div class="hd"><span class="sha">7d1e004</span><span class="msg">publica "Extreme Programming Explained"</span><span class="date">out/1999</span></div>
+            <p>O livro pela Addison-Wesley formaliza os quatro valores, as práticas, o ciclo de vida e os papéis. É a documentação primária do método e a fonte dos capítulos 21 e 22 usados aqui.</p>
+          </div>
+          <div class="commit">
+            <div class="hd"><span class="sha">c58b7aa</span><span class="msg">documenta as 29 regras em extremeprogramming.org</span><span class="date">1999</span></div>
+            <p>Don Wells organiza o método em cinco categorias: planejamento, gerenciamento, projeto, codificação e testes. Vira a referência online canônica.</p>
+          </div>
+          <div class="commit">
+            <div class="hd"><span class="sha">e02f39b</span><span class="msg">Chrysler cancela o projeto C3</span><span class="date">fev/2000</span></div>
+            <p>Após a aquisição pela Daimler-Benz, o projeto que originou o XP é encerrado. A metodologia, porém, já havia se espalhado pela comunidade e sobreviveu ao próprio projeto.</p>
+          </div>
+          <div class="commit">
+            <div class="hd"><span class="sha">1b4d7f5</span><span class="msg">assina o Manifesto Ágil</span><span class="date">fev/2001</span></div>
+            <p>Beck é um dos signatários. O XP passa a ser reconhecido como uma das metodologias fundadoras do movimento ágil.</p>
+          </div>
+          <div class="commit">
+            <div class="hd"><span class="sha">9ca6e18</span><span class="msg">2ª edição com Cynthia Andres</span><span class="date">2004</span></div>
+            <p>Acrescenta o valor <strong>respeito</strong>, reorganiza as práticas em primárias e corolárias e amplia a lista de papéis, com a ressalva de que num time maduro eles não são fixos nem rígidos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03 -->
+      <section class="sec" id="s3">
+        <div class="sec-head">
+          <span class="filename">03_ciclo-de-vida.md</span>
+          <h2>Seis fases, do primeiro cartão até a morte</h2>
+          <p class="lede">Beck descreve o ciclo de vida de um projeto XP ideal no capítulo 21 do livro. Não é uma cascata: as fases se sobrepõem e o coração do processo é o laço de iteração, que se repete continuamente da terceira fase em diante.</p>
+        </div>
+
+        <div class="phases">
+          <div class="ph"><span class="n">1</span><div>
+            <h3>Exploração<small>exploration</small></h3>
+            <p>O cliente escreve as primeiras histórias; o time experimenta a tecnologia, testa a arquitetura com spikes e aprende a estimar. Termina quando as histórias são suficientes para uma primeira release.</p>
+            <p class="out">sai daqui: <b>primeiras histórias</b> · <b>spikes de arquitetura</b> · <b>metáfora do sistema</b></p>
+          </div></div>
+          <div class="ph"><span class="n">2</span><div>
+            <h3>Planejamento<small>planning</small></h3>
+            <p>O jogo do planejamento: cliente prioriza, programadores estimam. Define-se o conjunto menor de histórias com mais valor de negócio e a data da primeira release. Costuma levar poucos dias.</p>
+            <p class="out">sai daqui: <b>plano de release</b> · <b>data da primeira entrega</b></p>
+          </div></div>
+          <div class="ph"><span class="n">3</span><div>
+            <h3>Iterações até a primeira release<small>iterations to release</small></h3>
+            <p>Série de iterações curtas, de 1 a 3 semanas, produzindo software testado e funcionando. A primeira iteração normalmente monta o esqueleto da arquitetura; as demais entregam histórias priorizadas.</p>
+            <p class="out">sai daqui: <b>plano de iteração</b> · <b>testes</b> · <b>software funcionando</b> · <b>velocidade medida</b></p>
+          </div></div>
+          <div class="ph"><span class="n">4</span><div>
+            <h3>Produção<small>productionizing</small></h3>
+            <p>Testes mais rigorosos, ajuste de desempenho e validação antes de o sistema entrar em operação real. As iterações podem encurtar. Ideias novas não entram no meio: viram histórias para depois.</p>
+            <p class="out">sai daqui: <b>sistema em produção</b> · <b>histórias adiadas para a próxima release</b></p>
+          </div></div>
+          <div class="ph"><span class="n">5</span><div>
+            <h3>Manutenção<small>maintenance</small></h3>
+            <p>Estado normal de um projeto XP. Desenvolver novas funcionalidades enquanto se mantém o sistema em produção. A velocidade tende a cair e o time pode mudar de composição.</p>
+            <p class="out">sai daqui: <b>novas releases</b> · <b>suporte ao sistema vivo</b></p>
+          </div></div>
+          <div class="ph"><span class="n">6</span><div>
+            <h3>Morte<small>death</small></h3>
+            <p>Quando o cliente não tem mais histórias a escrever e o sistema atende às necessidades — ou quando o custo de mantê-lo deixa de compensar. É a hora da documentação final do sistema.</p>
+            <p class="out">sai daqui: <b>documentação final do sistema</b></p>
+          </div></div>
+        </div>
+
+        <p class="cmt">// fluxo de um projeto XP</p>
+        <figure class="flow">
+          <svg viewBox="0 0 940 400" role="img" aria-label="Fluxograma: histórias do usuário levam ao spike arquitetural e ao planejamento da release; deste parte a iteração, seguida dos testes de aceitação e da pequena versão, que realimenta o planejamento. Bugs voltam para a iteração.">
+            <defs>
+              <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#8695AB" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+              <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#FF6B6B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+            </defs>
+            <rect x="30" y="44" width="190" height="64" rx="5" fill="#F6EFDE"/>
+            <text x="125" y="70" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#211A12">Histórias do usuário</text>
+            <text x="125" y="90" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#8C7A61">escritas pelo cliente</text>
+            <rect x="270" y="44" width="190" height="64" rx="5" fill="#232C3D" stroke="#334158" stroke-dasharray="5 4"/>
+            <text x="365" y="70" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#DCE3ED">Spike arquitetural</text>
+            <text x="365" y="90" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5F6E85">metáfora do sistema</text>
+            <rect x="510" y="44" width="210" height="64" rx="5" fill="#232C3D" stroke="#334158"/>
+            <text x="615" y="70" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#DCE3ED">Planejamento da release</text>
+            <text x="615" y="90" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5F6E85">jogo do planejamento</text>
+            <rect x="510" y="210" width="210" height="64" rx="5" fill="#232C3D" stroke="#52D98A" stroke-width="1.6"/>
+            <text x="615" y="236" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#52D98A">Iteração</text>
+            <text x="615" y="256" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5F6E85">1 a 3 semanas</text>
+            <rect x="270" y="210" width="190" height="64" rx="5" fill="#232C3D" stroke="#334158"/>
+            <text x="365" y="236" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#DCE3ED">Testes de aceitação</text>
+            <text x="365" y="256" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#5F6E85">placar publicado</text>
+            <rect x="30" y="210" width="190" height="64" rx="5" fill="#F6EFDE"/>
+            <text x="125" y="236" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="14" font-weight="700" fill="#211A12">Pequena versão</text>
+            <text x="125" y="256" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="10.5" fill="#8C7A61">software em produção</text>
+            <line x1="220" y1="76" x2="263" y2="76" stroke="#8695AB" stroke-width="1.4" marker-end="url(#ar)"/>
+            <line x1="460" y1="76" x2="503" y2="76" stroke="#8695AB" stroke-width="1.4" marker-end="url(#ar)"/>
+            <line x1="615" y1="108" x2="615" y2="203" stroke="#8695AB" stroke-width="1.4" marker-end="url(#ar)"/>
+            <line x1="510" y1="242" x2="467" y2="242" stroke="#8695AB" stroke-width="1.4" marker-end="url(#ar)"/>
+            <line x1="270" y1="242" x2="227" y2="242" stroke="#8695AB" stroke-width="1.4" marker-end="url(#ar)"/>
+            <path d="M720 226 H 775 V 305 H 615 V 281" fill="none" stroke="#FF6B6B" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arr)"/>
+            <text x="695" y="325" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#FF6B6B">bugs viram testes</text>
+            <path d="M125 274 V 358 H 858 V 76 H 727" fill="none" stroke="#FF6B6B" stroke-width="1.2" stroke-dasharray="4 4" marker-end="url(#arr)"/>
+            <text x="400" y="348" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="11" fill="#FF6B6B">nova história · velocidade medida · replanejamento</text>
+          </svg>
+          <figcaption>Adaptado do fluxograma de projeto de Don Wells (extremeprogramming.org). As setas contínuas são o caminho principal; as tracejadas são os laços de realimentação. Os blocos em creme são os pontos de contato direto com o cliente.</figcaption>
+        </figure>
+
+        <p class="cmt">// dentro de cada iteração</p>
+        <div class="loop">
+          <h3>while (temHistórias)</h3>
+          <p class="lede" style="margin-top:8px;font-size:15px">Iterações de 1 a 3 semanas, com reunião em pé diária e velocidade medida ao fim de cada ciclo.</p>
+          <ul>
+            <li>planejar iteração</li><li class="ar">→</li>
+            <li>quebrar em tarefas</li><li class="ar">→</li>
+            <li>escrever o teste</li><li class="ar">→</li>
+            <li>codificar em par</li><li class="ar">→</li>
+            <li>refatorar</li><li class="ar">→</li>
+            <li>integrar</li><li class="ar">→</li>
+            <li>testes de aceitação</li><li class="ar">→</li>
+            <li>pequena versão</li><li class="ar">↺</li>
+            <li class="bk">feedback do cliente</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 04 -->
+      <section class="sec" id="s4">
+        <div class="sec-head">
+          <span class="filename">04_artefatos.md</span>
+          <h2>Cartões, testes e código que funciona</h2>
+          <p class="lede">XP produz poucos artefatos, e quase todos são leves e descartáveis. Os requisitos vivem em cartões de história, não em especificações; os testes automatizados substituem boa parte da documentação; e o entregável real é sempre software rodando.</p>
+        </div>
+        <div class="cards">
+          <div class="idx"><span class="k">Requisito</span><h4>Histórias do usuário</h4><p>Cartões curtos escritos pelo cliente descrevendo uma funcionalidade em linguagem de negócio. Base para estimativa e priorização.</p></div>
+          <div class="idx"><span class="k">Planejamento</span><h4>Plano de release</h4><p>Quais histórias entram em qual versão e quando. É o resultado do jogo do planejamento.</p></div>
+          <div class="idx"><span class="k">Planejamento</span><h4>Plano de iteração</h4><p>Histórias selecionadas para o ciclo atual, quebradas em tarefas assumidas pelos próprios programadores.</p></div>
+          <div class="idx"><span class="k">Execução</span><h4>Cartões de tarefa</h4><p>Unidades técnicas derivadas das histórias, estimadas em horas ideais por quem vai implementar.</p></div>
+          <div class="idx"><span class="k">Projeto</span><h4>Cartões CRC</h4><p>Classe, responsabilidade e colaboração. Usados em sessões rápidas de projeto coletivo, sem UML pesada.</p></div>
+          <div class="idx"><span class="k">Projeto</span><h4>Spike solutions</h4><p>Protótipos descartáveis feitos só para reduzir risco técnico e melhorar uma estimativa. O código é jogado fora depois.</p></div>
+          <div class="idx"><span class="k">Qualidade</span><h4>Testes unitários</h4><p>Automatizados e escritos antes do código. Todo o código precisa passar em 100% deles para ser liberado.</p></div>
+          <div class="idx"><span class="k">Qualidade</span><h4>Testes de aceitação</h4><p>Definidos pelo cliente a partir das histórias. Executados com frequência e com o placar publicado ao time.</p></div>
+          <div class="idx"><span class="k">Métrica</span><h4>Velocidade do projeto</h4><p>Quanto trabalho o time entregou na iteração anterior. É o único insumo para planejar a próxima.</p></div>
+          <div class="idx"><span class="k">Comunicação</span><h4>Metáfora do sistema</h4><p>Uma história ou nome comum que dá ao time um vocabulário compartilhado sobre como o sistema funciona.</p></div>
+          <div class="idx"><span class="k">Convenção</span><h4>Padrão de codificação</h4><p>Acordado por todos. Viabiliza a propriedade coletiva do código e o rodízio de duplas.</p></div>
+          <div class="idx"><span class="k">Entrega</span><h4>Pequenas versões</h4><p>Software funcionando entregue ao cliente ao fim de cada iteração. É o artefato que realmente importa.</p></div>
+        </div>
+        <p class="note">XP minimiza documentação formal: o código legível, os testes automatizados e a conversa presencial são a documentação viva do projeto. A documentação final do sistema é escrita na fase de morte.</p>
+      </section>
+
+      <!-- 05 -->
+      <section class="sec" id="s5">
+        <div class="sec-head">
+          <span class="filename">05_papeis.md</span>
+          <h2>Sete papéis, um time só</h2>
+          <p class="lede">Beck define os papéis no capítulo 22 do livro. Não são cargos hierárquicos: gerentes, clientes e desenvolvedores são parceiros iguais num time colaborativo que se auto-organiza em torno do problema.</p>
+        </div>
+        <div class="roles">
+          <div class="role"><div><span class="nm">Programador</span><span class="en">programmer</span></div><p>O papel central. Escreve testes e código, sempre em par, mantém o projeto o mais simples possível, refatora sem pedir licença e se comunica constantemente com colegas e cliente.</p></div>
+          <div class="role"><div><span class="nm">Cliente</span><span class="en">customer</span></div><p>Escreve as histórias e os testes de aceitação, define prioridades e decide o escopo de cada release. Precisa estar disponível ao time o tempo todo — a prática do <em>on-site customer</em>.</p></div>
+          <div class="role"><div><span class="nm">Testador</span><span class="en">tester</span></div><p>Ajuda o cliente a escolher e escrever os testes de aceitação, executa-os regularmente, divulga os resultados e mantém as ferramentas de teste funcionando.</p></div>
+          <div class="role"><div><span class="nm">Rastreador</span><span class="en">tracker</span></div><p>A consciência do time. Mede a velocidade do projeto, compara estimativas com o realizado e devolve esse retrato à equipe para que as próximas estimativas melhorem.</p></div>
+          <div class="role"><div><span class="nm">Treinador</span><span class="en">coach</span></div><p>Guardião do processo. Percebe quando o time está se desviando das práticas, ensina, sugere ajustes e mantém a calma quando o projeto aperta.</p></div>
+          <div class="role"><div><span class="nm">Consultor</span><span class="en">consultant</span></div><p>Especialista externo acionado pontualmente para um problema técnico específico. Ensina o time a resolver, em vez de resolver no lugar dele.</p></div>
+          <div class="role"><div><span class="nm">Gerente</span><span class="en">big boss</span></div><p>Garante recursos, ambiente de trabalho aberto e confiança. Cobra resultados sem microgerenciar e dá ao time a coragem para seguir o processo.</p></div>
+        </div>
+        <p class="note"><strong>Na 2ª edição (2004)</strong> Beck amplia a lista com papéis como arquiteto, designer de interação, gerente de produto, redator técnico, usuário e executivo — e ressalva que, num time maduro, os papéis não são fixos nem rígidos: o objetivo não é preencher funções abstratas, e sim que cada pessoa contribua com tudo o que puder.</p>
+      </section>
+
+      <!-- 06 -->
+      <section class="sec" id="s6">
+        <div class="sec-head">
+          <span class="filename">06_regras.cfg</span>
+          <h2>As 29 regras oficiais, em cinco categorias</h2>
+          <p class="lede">As 12 práticas são a versão mais divulgada do XP, mas a documentação de Don Wells organiza o método em 29 regras. Planejamento, gerenciamento e projeto aparecem explicitamente para rebater a acusação de que o XP "não planeja e não projeta".</p>
+        </div>
+        <div class="tree">
+          <div class="dir"><h4>planejamento/ <span>5</span></h4><ol>
+            <li>Histórias do usuário são escritas.</li>
+            <li>O planejamento de release cria o cronograma de entregas.</li>
+            <li>Faça pequenas versões com frequência.</li>
+            <li>O projeto é dividido em iterações.</li>
+            <li>O planejamento da iteração inicia cada iteração.</li>
+          </ol></div>
+          <div class="dir"><h4>gerenciamento/ <span>6</span></h4><ol>
+            <li>Dê ao time um espaço de trabalho aberto e dedicado.</li>
+            <li>Estabeleça um ritmo sustentável.</li>
+            <li>Uma reunião em pé inicia cada dia.</li>
+            <li>A velocidade do projeto é medida.</li>
+            <li>Faça rodízio de pessoas entre as duplas.</li>
+            <li>Conserte o XP quando ele quebrar.</li>
+          </ol></div>
+          <div class="dir"><h4>projeto/ <span>6</span></h4><ol>
+            <li>Simplicidade.</li>
+            <li>Escolha uma metáfora do sistema.</li>
+            <li>Use cartões CRC nas sessões de projeto.</li>
+            <li>Crie spike solutions para reduzir risco.</li>
+            <li>Nenhuma funcionalidade é adicionada antes da hora.</li>
+            <li>Refatore sempre e onde for possível.</li>
+          </ol></div>
+          <div class="dir"><h4>codificacao/ <span>8</span></h4><ol>
+            <li>O cliente está sempre disponível.</li>
+            <li>O código segue o padrão acordado.</li>
+            <li>Escreva o teste unitário primeiro.</li>
+            <li>Todo código de produção é feito em dupla.</li>
+            <li>Só uma dupla integra código por vez.</li>
+            <li>Integre com frequência.</li>
+            <li>Mantenha um computador dedicado à integração.</li>
+            <li>Adote propriedade coletiva do código.</li>
+          </ol></div>
+          <div class="dir"><h4>testes/ <span>4</span></h4><ol>
+            <li>Todo código precisa ter testes unitários.</li>
+            <li>Todo código precisa passar em todos os testes antes de ser liberado.</li>
+            <li>Quando um bug é encontrado, criam-se testes para ele.</li>
+            <li>Os testes de aceitação rodam com frequência e o placar é publicado.</li>
+          </ol></div>
+        </div>
+      </section>
+
+      <!-- 07 -->
+      <section class="sec" id="s7">
+        <div class="sec-head">
+          <span class="filename">07_critica.md</span>
+          <h2>Vantagens, limitações e críticas</h2>
+          <p class="lede">O XP é uma das metodologias mais debatidas da engenharia de software. Apresentar os dois lados costuma valer mais do que vender o método — é o que diferencia um trabalho descritivo de um trabalho crítico.</p>
+        </div>
+        <div class="pc">
+          <div class="good">
+            <p class="cmt g">// pass</p>
+            <h3>O que o XP entrega bem</h3>
+            <ul>
+              <li>Reduz o custo da mudança: mudar um requisito na iteração 7 custa quase o mesmo que na iteração 2.</li>
+              <li>Defeitos aparecem cedo, quando ainda são baratos de corrigir.</li>
+              <li>Conhecimento distribuído pelo time — par, rodízio e propriedade coletiva reduzem a dependência de pessoas-chave.</li>
+              <li>O cliente vê valor real a cada iteração, em vez de esperar meses por uma entrega única.</li>
+              <li>Menos desperdício: só se implementa o que foi priorizado, evitando funcionalidades que nunca serão usadas.</li>
+              <li>O código permanece íntegro: refatoração contínua e cobertura de testes evitam a degradação típica de sistemas longos.</li>
+            </ul>
+          </div>
+          <div class="bad">
+            <p class="cmt r">// fail</p>
+            <h3>Onde ele falha ou é contestado</h3>
+            <ul>
+              <li>As práticas são interdependentes — Stephens e Rosenberg argumentam que, como poucas organizações adotam todas, o processo inteiro tende a falhar.</li>
+              <li>Exige disciplina alta e constante; sem ela, o XP vira improviso com nome bonito.</li>
+              <li>Sem controle formal de mudanças, o escopo pode crescer além do contratado.</li>
+              <li>O cliente disponível em tempo integral é um ponto único de falha, é caro e pode virar fonte de estresse.</li>
+              <li>A ausência de especificação de projeto dificulta auditoria, contratos de preço fechado e a entrada de novos times.</li>
+              <li>Par, rodízio e refatoração mal aplicados podem, de fato, aumentar custo e prazo.</li>
+              <li>Não escala naturalmente: Beck reconhece que o XP funciona mal em times grandes. O IXP (Industrial XP, 2004) surgiu como tentativa de adaptação, com 23 práticas.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08 -->
+      <section class="sec" id="s8">
+        <div class="sec-head">
+          <span class="filename">08_xp-vs-scrum.md</span>
+          <h2>XP e Scrum lado a lado</h2>
+          <p class="lede">A comparação mais provável de aparecer numa pergunta. A diferença essencial: o Scrum organiza <strong>como o trabalho flui</strong> e é silencioso sobre engenharia; o XP prescreve <strong>como se programa</strong>. Por isso os dois são frequentemente combinados, e não escolhidos um em vez do outro.</p>
+        </div>
+        <table class="tbl">
+          <thead><tr><th></th><th class="xpc">Extreme Programming</th><th>Scrum</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Foco</th><td class="xpc">Práticas técnicas de engenharia</td><td>Gestão e fluxo do trabalho</td></tr>
+            <tr><th scope="row">Ciclo</th><td class="xpc">Iteração de 1 a 3 semanas</td><td>Sprint de 1 a 4 semanas</td></tr>
+            <tr><th scope="row">Papéis</th><td class="xpc">Programador, cliente, testador, rastreador, treinador, consultor e gerente</td><td>Product Owner, Scrum Master e time de desenvolvimento</td></tr>
+            <tr><th scope="row">Quem prioriza</th><td class="xpc">O cliente, presente no time em tempo integral</td><td>O Product Owner, via backlog do produto</td></tr>
+            <tr><th scope="row">Mudança no meio do ciclo</th><td class="xpc">Aceita, desde que uma história equivalente saia do lugar</td><td>Escopo da sprint protegido depois do planejamento</td></tr>
+            <tr><th scope="row">Prescreve como programar</th><td class="xpc">Sim: TDD, par, integração contínua, refatoração, padrão de código</td><td>Não: cada time decide suas práticas técnicas</td></tr>
+            <tr><th scope="row">Artefatos</th><td class="xpc">Histórias, plano de release, plano de iteração, cartões CRC, testes automatizados</td><td>Product Backlog, Sprint Backlog e Incremento</td></tr>
+            <tr><th scope="row">Na prática</th><td colspan="2">Combinação comum: Scrum para organizar o fluxo e as cerimônias, XP para garantir a qualidade técnica dentro dele.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 09 -->
+      <section class="sec" id="s9">
+        <div class="sec-head">
+          <span class="filename">09_glossario.md</span>
+          <h2>Glossário</h2>
+          <p class="lede">Os termos que você precisa saber explicar sem ler o slide.</p>
+        </div>
+        <dl class="gloss">
+          <div class="gterm"><dt>História do usuário<em>user story</em></dt><dd>Descrição curta de uma funcionalidade, escrita pelo cliente em linguagem de negócio, num cartão. Não é uma especificação: é uma promessa de conversa.</dd></div>
+          <div class="gterm"><dt>Jogo do planejamento<em>planning game</em></dt><dd>Reunião em que o cliente prioriza histórias por valor de negócio e os programadores estimam esforço. Ninguém invade o papel do outro.</dd></div>
+          <div class="gterm"><dt>Velocidade do projeto<em>project velocity</em></dt><dd>Quantidade de trabalho concluída na iteração anterior. É o único insumo para prever quanto cabe na próxima: planejamento empírico, não especulativo.</dd></div>
+          <div class="gterm"><dt>Spike<em>spike solution</em></dt><dd>Protótipo descartável, com prazo curto, feito só para responder a uma dúvida técnica e melhorar uma estimativa. O código é jogado fora depois.</dd></div>
+          <div class="gterm"><dt>Metáfora do sistema<em>system metaphor</em></dt><dd>Uma imagem ou nome compartilhado que dá ao time um vocabulário comum sobre como o sistema funciona, substituindo o jargão de arquitetura.</dd></div>
+          <div class="gterm"><dt>TDD<em>test driven development</em></dt><dd>Escrever o teste que falha antes do código que o faz passar. Inverte a ordem tradicional e transforma o teste em especificação executável.</dd></div>
+          <div class="gterm"><dt>Refatoração<em>refactoring</em></dt><dd>Melhorar a estrutura interna do código sem alterar seu comportamento externo. Feita continuamente, não como projeto separado.</dd></div>
+          <div class="gterm"><dt>Propriedade coletiva<em>collective ownership</em></dt><dd>Qualquer dupla pode alterar qualquer arquivo, sem pedir autorização. Sustentada pelo padrão de código, pelos testes e pelo rodízio.</dd></div>
+          <div class="gterm"><dt>Integração contínua<em>continuous integration</em></dt><dd>Integrar o código várias vezes ao dia, rodando toda a bateria de testes. Nada entra se algum teste falhar.</dd></div>
+          <div class="gterm"><dt>YAGNI<em>you aren't gonna need it</em></dt><dd>"Você não vai precisar disso." Regra contra implementar hoje o que só talvez seja útil amanhã.</dd></div>
+          <div class="gterm"><dt>Reunião em pé<em>stand-up meeting</em></dt><dd>Encontro diário curto, feito de pé justamente para não se estender, sobre o que foi feito, o que será feito e quais os impedimentos.</dd></div>
+          <div class="gterm"><dt>Ritmo sustentável<em>sustainable pace</em></dt><dd>Antes chamado de "semana de 40 horas". Hora extra crônica derruba a qualidade e a velocidade: cansaço produz defeito.</dd></div>
+          <div class="gterm"><dt>Cartão CRC<em>class-responsibility-collaboration</em></dt><dd>Cartão com o nome de uma classe, o que ela faz e com quem colabora. Ferramenta de projeto coletivo em mesa, sem UML pesada.</dd></div>
+          <div class="gterm"><dt>Teste de aceitação<em>acceptance test</em></dt><dd>Teste definido pelo cliente a partir de uma história. Determina se a funcionalidade está pronta do ponto de vista do negócio.</dd></div>
+        </dl>
+      </section>
+
+      <!-- 10 -->
+      <section class="sec" id="s10">
+        <div class="sec-head">
+          <span class="filename">10_referencias.md</span>
+          <h2>Fontes consultadas</h2>
+        </div>
+        <ul class="refs">
+          <li>AELA. <b>Extreme Programming e o desenvolvimento ágil de softwares</b>. Medium, [<em>s. l.</em>], [<em>s. d.</em>]. Disponível em: <a href="https://medium.com/aela/extreme-programming-e-o-desenvolvimento-%C3%A1gil-de-softwares-e3048f786df4" target="_blank" rel="noopener">https://medium.com/aela/extreme-programming-e-o-desenvolvimento-ágil-de-softwares-e3048f786df4</a>. Acesso em: 24 ago. 2026.</li>
+          <li>BECK, Kent. <b>Extreme Programming Explained</b>: embrace change. Boston: Addison-Wesley, 1999. ISBN 0-201-61641-6.</li>
+          <li>BECK, Kent <em>et al.</em> <b>Manifesto para o desenvolvimento ágil de software</b>. [<em>S. l.</em>], 2001. Disponível em: <a href="https://agilemanifesto.org/iso/ptbr/manifesto.html" target="_blank" rel="noopener">https://agilemanifesto.org/iso/ptbr/manifesto.html</a>. Acesso em: 24 ago. 2026.</li>
+          <li>BECK, Kent; ANDRES, Cynthia. <b>Extreme Programming Explained</b>: embrace change. 2. ed. Boston: Addison-Wesley, 2004. ISBN 978-0-321-27865-4.</li>
+          <li>EXTREME programming. <em>In</em>: WIKIPÉDIA: a enciclopédia livre. [<em>S. l.</em>]: Wikimedia Foundation, 2026. Disponível em: <a href="https://en.wikipedia.org/wiki/Extreme_programming" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Extreme_programming</a>. Acesso em: 24 ago. 2026.</li>
+          <li>MANOEL. <b>Extreme Programming</b>: conceitos e práticas. DevMedia, Rio de Janeiro, 2006. Disponível em: <a href="https://www.devmedia.com.br/extreme-programming-conceitos-e-praticas/1498" target="_blank" rel="noopener">https://www.devmedia.com.br/extreme-programming-conceitos-e-praticas/1498</a>. Acesso em: 24 ago. 2026.</li>
+          <li>SCHWABER, Ken; SUTHERLAND, Jeff. <b>O guia do Scrum</b>: o guia definitivo para o Scrum, as regras do jogo. [<em>S. l.</em>], 2020. Disponível em: <a href="https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Portuguese-Brazilian.pdf" target="_blank" rel="noopener">https://scrumguides.org/</a>. Acesso em: 24 ago. 2026.</li>
+          <li>STEPHENS, Matt; ROSENBERG, Doug. <b>Extreme Programming Refactored</b>: the case against XP. Berkeley: Apress, 2003. ISBN 978-1-59059-096-6.</li>
+          <li>WELLS, Don. <b>Extreme Programming</b>: a gentle introduction. [<em>S. l.</em>], 2013. Disponível em: <a href="http://www.extremeprogramming.org/" target="_blank" rel="noopener">http://www.extremeprogramming.org/</a>. Acesso em: 24 ago. 2026.</li>
+          <li>WELLS, Don. <b>The rules of Extreme Programming</b>. [<em>S. l.</em>], 1999. Disponível em: <a href="http://www.extremeprogramming.org/rules.html" target="_blank" rel="noopener">http://www.extremeprogramming.org/rules.html</a>. Acesso em: 24 ago. 2026.</li>
+        </ul>
+        <p class="foot">Referências elaboradas conforme a ABNT NBR 6023:2018, em ordem alfabética de autoria. Os termos em inglês ao longo do documento são a nomenclatura original de Kent Beck e Don Wells, mantida por ser a forma como as práticas aparecem na literatura.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="status">
+    <span class="it"><span class="dot"></span>todos os testes passando</span>
+    <span class="it">11 arquivos</span>
+    <span class="it push">práticas 12/12</span>
+    <span class="it">regras 29/29</span>
+    <span class="it">papéis 7</span>
+  </div>
+
+</div>
+</body>
+</html>
